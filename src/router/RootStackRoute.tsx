@@ -1,25 +1,27 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../pages/Home";
 import Intro from "../pages/Intro";
-import React, { ComponentType } from "react";
+import React from "react";
 
-interface RouterType {
-  name: keyof RootStackParamList;
-  component: ComponentType;
-}
+export const routes = [
+  {
+    name: "Home",
+    component: Home,
+  },
+  {
+    name: "Introduction",
+    component: Intro,
+  },
+];
 
-export type RootStackParamList = {
-  Home: undefined;
-  Introduction: undefined;
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 
 export const RootStack = () => {
   return (
     <Stack.Navigator initialRouteName="Introduction">
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Introduction" component={Intro} />
+      {routes.map((tabs, index) => (
+        <Stack.Screen key={index} name={tabs.name} component={tabs.component} />
+      ))}
     </Stack.Navigator>
   );
 };
